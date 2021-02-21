@@ -3,14 +3,15 @@
 var strok = 4;
 
 class walker {
-    constructor(x, y, d, r) {
+    constructor(x, y, d, r, dense) {
         this.radius = r;
         this.startConDist = d;
+        this.density = dense;
         this.pos = createVector(x, y);
         //this.vel = createVector(0, 0);
-        this.vel = createVector(random(-.51, .51), random(-.51, .51));
+        this.vel = createVector(random(0.51), random(0.51));
         //this.acc = createVector(0, 0);
-        // this.acc = createVector(random(-1, 1), random(-1, 1))
+        //this.acc = createVector(random(-1, 1), random(-1, 1))
 
         this.show = function() {
             // body...
@@ -19,9 +20,10 @@ class walker {
             fill(0, 10);
             rect(0, 0, width, height);
             fill(255);
-            stroke(150);
-            strokeWeight(1);
-            ellipse(this.pos.x, this.pos.y, this.radius * 2, this.radius * 2);
+            //stroke(150);
+            noStroke();
+            //strokeWeight(1);
+            ellipse(this.pos.x, this.pos.y, this.radius * 2 * this.density, this.radius * 2 * this.density);
             /*strokeWeight(strok);
             stroke(10);
             point(this.pos.x, this.pos.y);
@@ -38,9 +40,9 @@ class walker {
         this.update = function() {
             this.mouse = createVector(mouseX, mouseY);
             this.acc = p5.Vector.sub(this.mouse, this.pos);
-            this.acc.setMag(.1);
+            this.acc.setMag(.2);
             this.vel.add(this.acc);
-            this.vel.limit(3);
+            this.vel.limit(5);
             this.pos.add(this.vel);
             this.setBoundry();
         }
