@@ -2,7 +2,7 @@
 var wkr = [];
 var boxSize = 3;
 var dis;
-var radius = 4;
+var radius = 3;
 var startDis = 140;
 
 function setup() {
