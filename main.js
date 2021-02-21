@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var wkr = [];
-var boxSize = 3;
+var boxSize = 5;
 var dis;
-var radius = 3;
+var radius = 2;
 var startDis = 140;
 
 function setup() {
@@ -24,7 +24,7 @@ function draw() {
                     wkr[particals].resolveCollision(wkr[other]);
                 }
                 wkr[particals].connect(wkr[other]);
-                //wkr[particals].attract(wkr[other]);
+                wkr[particals].attract(wkr[other]);
             }
             wkr[particals].attract(wkr[other]);
         }
