@@ -99,15 +99,10 @@ class walker {
         this.scattered = function(other) {
             let newBox = [];
             let d = this.checkDist(other);
-            if (d < 2 * radius) {
-                for (var i = 0; i < 10; i++) {
-                    newBox.push(new Particle(this.pos.x, this.pos.y, this.startConDist, 5, this.dense));
-                }
-                this.radius -= 2;
-                other.radius -= 2;
+            while (d < 2 * radius) {
+                this.radius -= 1;
+                other.radius -= 1;
             }
-            newBox.show();
-            newBox.update();
         }
 
         /**
