@@ -3,10 +3,10 @@
 var strok = 4;
 
 class walker {
-    constructor(x, y, d, r, dense) {
+    constructor(x, y, d, r) {
         this.radius = r;
         this.startConDist = d;
-        this.density = dense;
+        //this.density = dense;
         this.pos = createVector(x, y);
         //this.vel = createVector(0, 0);
         this.vel = createVector(random(0.51), random(0.51));
@@ -23,7 +23,7 @@ class walker {
             //stroke(150);
             noStroke();
             //strokeWeight(1);
-            ellipse(this.pos.x, this.pos.y, this.radius * 2 * this.density, this.radius * 2 * this.density);
+            ellipse(this.pos.x, this.pos.y, this.radius * 2, this.radius * 2);
             /*strokeWeight(strok);
             stroke(10);
             point(this.pos.x, this.pos.y);
@@ -39,10 +39,10 @@ class walker {
          */
         this.update = function() {
             this.mouse = createVector(mouseX, mouseY);
-            this.acc = p5.Vector.sub(this.mouse, this.pos);
-            this.acc.setMag(.2);
+            //this.acc = p5.Vector.sub(this.mouse, this.pos);
+            this.acc.setMag(.1);
             this.vel.add(this.acc);
-            this.vel.limit(5);
+            this.vel.limit(3);
             this.pos.add(this.vel);
             this.setBoundry();
         }
@@ -87,9 +87,27 @@ class walker {
             let dis = this.checkDist(other);
             let lifespan = map(dis, this.startConDist, 0, 0, 255);
             let thikness = map(lifespan, 0, 50, 0, .51);
-            stroke(0, lifespan);
+            stroke(20, lifespan);
             strokeWeight(thikness);
-            //line(this.pos.x, this.pos.y, other.pos.x, other.pos.y);
+            line(this.pos.x, this.pos.y, other.pos.x, other.pos.y);
+        }
+        /**
+         * this function will scattered particales after collision
+         * @param {object} other it os an object of the vector 
+         * 
+         */
+        this.scattered = function(other) {
+            let newBox = [];
+            let d = this.checkDist(other);
+            if (d < 2 * radius) {
+                for (var i = 0; i < 10; i++) {
+                    newBox.push(new Particle(this.pos.x, this.pos.y, this.startConDist, 5, this.dense));
+                }
+                this.radius -= 2;
+                other.radius -= 2;
+            }
+            newBox.show();
+            newBox.update();
         }
 
         /**
@@ -101,7 +119,7 @@ class walker {
          */
         this.attract = function(other) {
             this.acc = p5.Vector.sub(other.pos, this.pos);
-            this.acc.setMag(0.1);
+            this.acc.setMag(0.08);
             //return this.acc;
         }
 
